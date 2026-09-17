@@ -16,7 +16,14 @@ open class Paket (
         println("Nomor Resi: $nomorResi")
         println("Pengirim: $pengirim")
         println("Penerima: $penerima")
-        println("Status Saat Ini: $status")
+        val deskripsiStatus = when (val s = status) {
+            is StatusPengiriman.MenungguDiproses -> "Menunggu Diproses"
+            is StatusPengiriman.DalamPerjalanan -> "Dalam Perjalanan (Kurir: ${s.namaKurir})"
+            is StatusPengiriman.Terkirim -> "Terkirim kepada ${s.namaPenerima} (${s.waktuSelesai})"
+            is StatusPengiriman.Gagal -> "Gagal (${s.alasan})"
+        }
+
+        println("Status Saat Ini: $deskripsiStatus")
         println("Biaya Pengiriman: ${hitungBiaya()}")
     }
 }
